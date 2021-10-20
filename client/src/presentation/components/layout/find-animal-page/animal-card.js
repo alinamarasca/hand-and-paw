@@ -1,39 +1,7 @@
-const animal = {
-  name: "Bob",
-  type: "Cat",
-  breed: "bobcat",
-  gender: "male",
-  character: "friendly",
-  dateBirth: "18/12/15",
-  pictures: [
-    {
-      image: "one.jpg",
-      isPrincipal: false,
-    },
-    {
-      image: "two.jpg",
-      isPrincipal: false,
-    },
-    {
-      image: "three.jpg",
-      isPrincipal: true,
-    },
-  ],
-};
+import getAvatarHandler from "../../../handlers/find-animal-page/get-avatar-handler.js";
 
-const giver = {
-  name: "Big Cats shelter",
-  location: "Oost-Vlanderen, Gent",
-};
-
-const getAvatar = () => {
-  return animal.pictures
-    .map(item => (item.isPrincipal ? item.image : null))
-    .filter(item => item);
-};
-
-const AnimalCard = (animal, giver) => {
-  const { type, breed, gender, character, dateBirth } = animal;
+export const AnimalCard = (animal, giver) => {
+  const { type, breed, gender, character, dateBirth, pictures } = animal;
   // create card
   const card = document.createElement("div");
   card.className = "animal-card";
@@ -42,7 +10,7 @@ const AnimalCard = (animal, giver) => {
   photo.className = "card-photo";
   const img = document.createElement("img");
   photo.appendChild(img);
-  photo.innerText = getAvatar();
+  photo.innerText = getAvatarHandler(pictures);
   // create info div
   const info = document.createElement("div");
   info.className = "card-info";
@@ -60,5 +28,3 @@ const AnimalCard = (animal, giver) => {
   card.appendChild(photo);
   return card;
 };
-
-document.querySelector("body").appendChild(AnimalCard(animal, giver));
