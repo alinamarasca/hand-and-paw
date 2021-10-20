@@ -1,5 +1,8 @@
-export const getAvatarHandler = array => {
-  return array
+const getAvatarHandler = array => {
+  const avatar = array
     .map(item => (item.isPrincipal ? item.image : null))
-    .filter(item => item);
+    .filter(item => item)[0];
+  return avatar;
 };
+
+module.exports = getAvatarHandler;
