@@ -1,4 +1,4 @@
-const getAvatarHandler = array => {
+export const getAvatarHandler = array => {
   let avatar;
   if (array.length === 0) {
     avatar = null;

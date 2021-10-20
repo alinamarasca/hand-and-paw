@@ -28,3 +28,5 @@ export const AnimalCard = (animal, giver) => {
   card.appendChild(photo);
   return card;
 };
+
+module.exports = AnimalCard;

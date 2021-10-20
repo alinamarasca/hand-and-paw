@@ -12,14 +12,16 @@ const arrNoTrue = [
 
 const arrEmpty = [];
 
-test("takes an array of objects with two items 'image' and 'isPrincipal' and returns the first value of object where isPrinciple = true", () => {
-  expect(getAvatarHandler(arr)).toBe("one.jpeg");
-});
+describe("takes an array of objects with two items 'image' and 'isPrincipal' and returns the first value of object where isPrinciple = true", () => {
+  it("takes an array of objects with two items 'image' and 'isPrincipal' and returns the first value of object where isPrinciple = true", () => {
+    expect(getAvatarHandler(arr)).toBe("one.jpeg");
+  });
 
-test("if there no isPrinciple equals to true, returns undefined", () => {
-  expect(getAvatarHandler(arrNoTrue)).toBe(undefined);
-});
+  it("if there no isPrinciple equals to true, returns undefined", () => {
+    expect(getAvatarHandler(arrNoTrue)).toBe(undefined);
+  });
 
-test("if array is empty, returns null", () => {
-  expect(getAvatarHandler(arrEmpty)).toBe(null);
+  it("if array is empty, returns null", () => {
+    expect(getAvatarHandler(arrEmpty)).toBe(null);
+  });
 });
