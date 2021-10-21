@@ -33,5 +33,5 @@ const giver = {
 };
 
 test("if there no isPrinciple equals to true, returns undefined", () => {
-  expect(document.getElementsByTagName(AnimalCard(animal, giver))).toBe("div");
+  expect().toBe("div");
 });
