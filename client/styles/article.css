@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+.article {
+  margin: auto;
+  font-weight: 400;
+  text-align: left;
+}
+
+.article p {
+  font-size: 1.3rem;
+  font-weight: 400;
+}

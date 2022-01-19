@@ -1,8 +1,39 @@
 # Hand and paw API
 
-This project will serve as the first introduction to setting up a simple REST backend for the HackYourFuture Web Apps module. The code in the start-of-class branch has all the endpoints for the channels resource implemented and serves as example code and starting point for the lecture.
+Is an open API where you can use already to get animals and publish them in your project, below is a full description of all routes that you can use for development purposes
 
-During the lecture the endpoints of the messages repo should be implemented in order to make the chat client work. A reference implementation of the end goal can be found on the reference-implementation branch.
+## Index
+
+- [Hand and paw API](#hand-and-paw-api)
+  - [Index](#index)
+  - [Getting Started](#getting-started)
+    - [Install database server](#install-database-server)
+    - [In the Hand and Paw app repo](#in-the-hand-and-paw-app-repo)
+    - [Using the API](#using-the-api)
+  - [The API Documentation](#the-api-documentation)
+    - [Routes](#routes)
+  - [Users](#users)
+    - [Create new User](#create-new-user)
+    - [Fetch users](#fetch-users)
+    - [Fetch one user](#fetch-one-user)
+    - [Delete user](#delete-user)
+    - [Update User](#update-user)
+    - [Delete user publication](#delete-user-publication)
+    - [Add favorite](#add-favorite)
+    - [Remove favorite](#remove-favorite)
+  - [Animals](#animals)
+    - [Create new animal](#create-new-animal)
+    - [Get animals](#get-animals)
+    - [Get one animal](#get-one-animal)
+    - [Delete Animal](#delete-animal)
+    - [Update Animal](#update-animal)
+    - [Upload Pictures](#upload-pictures)
+    - [Delete Picture](#delete-picture)
+    - [Update Picture](#update-picture)
+    - [Update Principal picture](#update-principal-picture)
+  - [Errors convention](#errors-convention)
+    - [Validation errors:](#validation-errors)
+    - [Not found errors:](#not-found-errors)
 
 ## Getting Started
 
@@ -15,36 +46,35 @@ Follow the steps explained by [mongodb](https://docs.mongodb.com/manual/administ
 - `npm install`
 - **run the server**
   - `npm run dev:api` - uses `nodemon` to restart the server each time you save a change
-- **run the front end**
-  - `npm run dev:client` - deploy the front end using `vite` package
 
 ### Using the API
 
 - **from postman**
   - `http://localhost:xxxx/api` - the main entry point to the API
 - **from the browser**
+
   - `http://localhost:xxxx/` serves `/api/<route-api>`
 
-### Fetch data from the API
+> [Back to index routes](#index)
 
-You must run at the same time the server: `npm run dev:api` and the the client `npm run dev:client`(in different VSCode windows)
+---
 
 ## The API Documentation
 
 ### Routes
 
-- [Users](#users)
+- [users](#users)
 - [animals](#animals)
 
-### Users
+## Users
 
-#### Create new User
+### Create new User
 
 Creates a new user.
 
 - **URL**
 
-  /user-register
+  api/users/register
 
 - **Method:**
 
@@ -64,26 +94,31 @@ Creates a new user.
 - **return:**
 
   ```js
-    {
-      "_id": "616ed72339ecbbf9b4c1c0b5",
-      "name": "laura",
-      "email": "lau@hyf.com"
+  {
+    "message": "You're successfully registered",
+    "user": {
+        "_id": "61793c6e62491604ca3ca72d",
+        "name": "laura",
+        "email": "lau2212@hyf.com"
+    }
   }
   ```
 
+  > [Back to index routes](#index)
+
 ---
 
-## Fetch users
+### Fetch users
 
 Get all users from the collection.
 
-> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Authorization** and value **bearer token** where **token** is the code that you are going to receive as response once you are logged in.
+> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
 
 Returns json data about a single channel.
 
 - **URL**
 
-/user-register
+api/users
 
 - **Method:**
 
@@ -109,23 +144,27 @@ Returns json data about a single channel.
 ]
 ```
 
+> [Back to index routes](#index)
+
 ---
 
-## Fetch one user
+### Fetch one user
 
 Get one user from the system.
 
-> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Authorization** and value **bearer token** where **token** is the code that you are going to receive as response once you are logged in.
+> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
 
 - **URL**
 
-  /api/user-register/:id
+  /api/users/:id
 
 - **Method:**
 
   `GET`
 
 - **URL Params**
+
+  `id = string` -> the user id
 
   **Required:**
 
@@ -134,32 +173,36 @@ Get one user from the system.
 - **Result:**
 
   ```js
-        }
-        "_id": "616ed72339ecbbf9b4c1c0b5",
-        "name": "rafael ",
-        "email": "lau@hyf.com",
-        "password": "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d",
-        "favorites": [],
-        "publishPet": [],
-        "registerDate": "2021-10-19T14:33:07.051Z",
-        "__v": 0,
-        "avatar": "c0b692fc-1622-4e1b-9571-eec912b77f1c.png",
-        "location": "location phote",
-        "phone": "0471758204",
-    }
+  [
+    {
+      _id: "616ed72339ecbbf9b4c1c0b5",
+      name: "rafael ",
+      email: "lau@hyf.com",
+      password: "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d",
+      favorites: [],
+      publishPet: [],
+      registerDate: "2021-10-19T14:33:07.051Z",
+      __v: 0,
+      avatar: "c0b692fc-1622-4e1b-9571-eec912b77f1c.png",
+      location: "location phote",
+      phone: "0471758204",
+    },
+  ];
   ```
+
+> [Back to index routes](#index)
 
 ---
 
-## Delete user
+### Delete user
 
-Remove a user of the dataBase.
+Remove a user and all registered animals of the dataBase.
 
-> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Authorization** and value **bearer token** where **token** is the code that you are going to receive as response once you are logged in.
+> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
 
 - **URL**
 
-  /api/user-register/:id
+  /api/users/delete/:id
 
 - **Method:**
 
@@ -167,9 +210,11 @@ Remove a user of the dataBase.
 
 - **URL Params**
 
+  `id = string` -> the user id
+
   **Required:**
 
-  `id = string`s
+  `id = string`
 
 - **Result:**
 
@@ -179,15 +224,17 @@ Remove a user of the dataBase.
     }
   ```
 
+  > [Back to index routes](#index)
+
 ---
 
-## Update User
+### Update User
 
-> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Authorization** and value **bearer token** where **token** is the code that you are going to receive as response once you are logged in.
+> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
 
 - **URL**
 
-  /api/user-register/:id
+  /api/users/update/:id
 
 - **Method:**
 
@@ -195,39 +242,37 @@ Remove a user of the dataBase.
 
 - **URL Params**
 
-  **Required:**
-
-  `i`
+  `id = string` -> the user id
 
 - **Body**
 
 Multiform data
 
-| key              | value                    | type    |
-| ---------------- | ------------------------ | ------- |
-| id               | 616ed72339ecbbf9b4c1c0b5 | text    |
-| name             | rafael                   | text    |
-| location         | location phote           | text    |
-| phone            | 0471758204               | text    |
-| email            | abcd@hyf.com             | text    |
-| repeatEmail      | abcd@hyf.com             | text    |
-| newPassword      | hello                    | text    |
-| oldPassword      | hello123                 | text    |
-| monday-access    | true                     | boolean |
-| monday-hours     | 8:00                     | text    |
-| tuesday-access   | true                     | boolean |
-| tuesday-hours    | 9:00 to 18:00            | text    |
-| wednesday-access | true                     | boolean |
-| wednesday-hours  | 9:00 to 18:00            | text    |
-| thursday-access  | true                     | boolean |
-| thursday-hours   | 9:00 to 18:00            | text    |
-| friday-access    | true                     | boolean |
-| friday-hours     | 9:00 to 18:00            | text    |
-| saturday-access  | true                     | boolean |
-| saturday-hours   | 9:00 to 18:00            | text    |
-| sunday-access    | true                     | boolean |
-| sunday-hours     | 9:00 to 18:00            | text    |
-| avatar           | profile.jpg              | file    |
+| key              | value                    | type |
+| ---------------- | ------------------------ | ---- |
+| id               | 616ed72339ecbbf9b4c1c0b5 | text |
+| name             | rafael                   | text |
+| location         | location phote           | text |
+| phone            | 0471758204               | text |
+| email            | abcd@hyf.com             | text |
+| repeatEmail      | abcd@hyf.com             | text |
+| newPassword      | hello                    | text |
+| oldPassword      | hello123                 | text |
+| monday-access    | on                       | text |
+| monday-hours     | 8:00                     | text |
+| tuesday-access   | on                       | text |
+| tuesday-hours    | 9:00 to 18:00            | text |
+| wednesday-access | on                       | text |
+| wednesday-hours  | 9:00 to 18:00            | text |
+| thursday-access  | on                       | text |
+| thursday-hours   | 9:00 to 18:00            | text |
+| friday-access    | on                       | text |
+| friday-hours     | 9:00 to 18:00            | text |
+| saturday-access  | on                       | text |
+| saturday-hours   | 9:00 to 18:00            | text |
+| sunday-access    | on                       | text |
+| sunday-hours     | 9:00 to 18:00            | text |
+| avatar           | profile.jpg              | file |
 
 - **Result:**
 
@@ -236,30 +281,30 @@ Multiform data
     {
       publicAccess: {
         monday: {
-          access: true,
+          access: on,
           hours: "8:00",
         },
         tuesday: {
-          access: true,
+          access: on,
           hours: "9:00 to 18:00",
         },
         wednesday: {
-          access: true,
+          access: on,
           hours: "9:00  to 18:00",
         },
         thursday: {
-          access: true,
+          access: on,
         },
         friday: {
-          access: true,
+          access: on,
           hours: "9:00 to 18:00",
         },
         saturday: {
-          access: true,
+          access: on,
           hours: "9:00 to 18:00",
         },
         sunday: {
-          access: true,
+          access: on,
           hours: "9:00 to 18:00",
         },
       },
@@ -278,15 +323,19 @@ Multiform data
   ];
   ```
 
-## Delete user publication
+  > [Back to index routes](#index)
 
-Remove the animal id in the `publishedAnimals` property, and deletes the animal in Animal collection
+---
 
-> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Authorization** and value **bearer token** where **token** is the code that you are going to receive as response once you are logged in.
+### Delete user publication
+
+Remove the animal id in the `registeredAnimals` property, and deletes the animal in Animal collection
+
+> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
 
 - **URL**
 
-  /api/user-register/delete-animal/:id
+  /api/users/delete-animal/:id
 
 - **Method:**
 
@@ -294,7 +343,7 @@ Remove the animal id in the `publishedAnimals` property, and deletes the animal 
 
 - **URL Params**
 
-  `id = string`
+  `id = string` -> the user id
 
   **Required:**
 
@@ -316,27 +365,105 @@ Remove the animal id in the `publishedAnimals` property, and deletes the animal 
     }
   ```
 
+  > [Back to index routes](#index)
+
 ---
 
-### Animals
+### Add favorite
 
-#### Routes for animals
+Add the animal id in the `favorites` property
 
-- [Create new animal](#Create new animal)
-- [Fetch Animals](#Fetch animals)
-- [Fetch one Animal](#Fetch animals)
-- [Delete one Animal](#Fetch animals)
-- [update one Animal](#Fetch animals)
+> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
 
-#### Create new animal
+- **URL**
 
-> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Authorization** and value **bearer token** where **token** is the code that you are going to receive as response once you are logged in.
+  /api/users/add-favorite/:id
+
+- **Method:**
+
+  `PATCH`
+
+- **URL Params**
+
+  `id = string` -> the user id
+
+  **Required:**
+
+  `id = string, animalId = string`
+
+  **Body**
+
+```js
+  {
+    "animalId": "61701cf768400ebe536a57c8"
+  }
+```
+
+- **Result:**
+
+  ```js
+  {
+    "message": "animal added successfully"
+  }
+  ```
+
+  > [Back to index routes](#index)
+
+---
+
+### Remove favorite
+
+Remove the animal id from the `favorites` property
+
+> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
+
+- **URL**
+
+  /api/users/remove-favorite/:id
+
+- **Method:**
+
+  `PATCH`
+
+- **URL Params**
+
+  `id = string` -> the user id
+
+  **Required:**
+
+  `id = string, animalId = string`
+
+  **Body**
+
+```js
+  {
+    "animalId": "61701cf768400ebe536a57c8"
+  }
+```
+
+- **Result:**
+
+  ```js
+  {
+    "message": "animal removed successfully"
+  }
+  ```
+
+  > [Back to index routes](#index)
+
+---
+
+## Animals
+
+### Create new animal
+
+> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
 
 Creates a new user.
 
 - **URL**
 
-  /api/publish-animal
+  /api/animals/register
 
 - **Method:**
 
@@ -395,9 +522,11 @@ Multiform data
   }
   ```
 
+  > [Back to index routes](#index)
+
 ---
 
-## Fetch animals
+### Get animals
 
 Get all users from the collection.
 
@@ -407,7 +536,7 @@ Returns json data about a single channel.
 
 - **URL**
 
-  /api/publish-animal
+  /api/animals
 
 - **Method:**
 
@@ -442,9 +571,11 @@ Returns json data about a single channel.
 ]
 ```
 
+> [Back to index routes](#index)
+
 ---
 
-## Fetch one animal
+### Get one animal
 
 Get one user from the system.
 
@@ -452,13 +583,15 @@ No registration or authorization required
 
 - **URL**
 
-  /api/publish-animal/:id
+  /api/animals/:id
 
 - **Method:**
 
   `GET`
 
 - **URL Params**
+
+  `id = string` -> animal id
 
   **Required:**
 
@@ -491,21 +624,27 @@ No registration or authorization required
   }
   ```
 
+  > [Back to index routes](#index)
+
 ---
 
-## Delete Animal
+### Delete Animal
 
 Remove an animal of the dataBase.
 
-> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Authorization** and value **bearer token** where **token** is the code that you are going to receive as response once you are logged in.
+> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
 
 - **URL**
 
-  /api/publish-animal/:id
+  /api/animals/delete/:id
 
 - **Method:**
 
   `DELETE`
+
+- **URL Params**
+
+  `id = string` -> animal id
 
   **Required:**
 
@@ -519,21 +658,25 @@ Remove an animal of the dataBase.
     }
   ```
 
+> [Back to index routes](#index)
+
 ---
 
-## Update Animal
+### Update Animal
 
-> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Authorization** and value **bearer token** where **token** is the code that you are going to receive as response once you are logged in.
+> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
 
 - **URL**
 
-  /api/publish-animal/:id
+  /api/animals/:id
 
 - **Method:**
 
   `PUT`
 
 - **URL Params**
+
+  `id = string` -> animal id
 
   **Required:**
 
@@ -587,4 +730,208 @@ Multiform data
     "__v": 0
   }
   ];
+
   ```
+
+  > [Back to index routes](#index)
+
+---
+
+### Upload Pictures
+
+Upload one or multiple pictures
+
+> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
+
+- **URL**
+
+  /api/animals/upload-pictures/:animalId
+
+- **Method:**
+
+  `patch`
+
+- **URL Params**
+
+`animalId: string`
+
+**Required:**
+
+`animalId`
+
+- **Body**
+
+Multiform Data
+
+| key      | value    | type |
+| -------- | -------- | ---- |
+| picture1 | cat1.jpg | file |
+| picture2 | cat2.jpg | file |
+| picture3 | cat3.jpg | file |
+| picture4 | cat4.jpg | file |
+
+- **Result:**
+
+  ```js
+  {
+    message: "pictures uploaded successfully";
+  }
+  ```
+
+  > [Back to index routes](#index)
+
+---
+
+### Delete Picture
+
+Deletes one picture
+
+> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
+
+- **URL**
+
+  /api/animals/delete-picture/:animalId
+
+- **Method:**
+
+  `patch`
+
+- **URL Params**
+
+`animalId: string`
+
+**Required:**
+
+`animalId`, `pictureId`
+
+- **Body**
+
+```js
+{
+    "pictureId": "61751428e9e34386a8e8cf01"
+}
+```
+
+- **Result:**
+
+  ```js
+  {
+    message: `picture, with the id: '61751428e9e34386a8e8cf01' removed successfully`;
+  }
+  ```
+
+  > [Back to index routes](#index)
+
+---
+
+### Update Picture
+
+Updates one picture
+
+> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
+
+- **URL**
+
+  /api/animals/update-picture/:animalId
+
+- **Method:**
+
+  `patch`
+
+- **URL Params**
+
+`animalId: string`
+
+**Required:**
+
+`animalId`, `pictureId`
+
+- **Body**
+
+Multiform Data
+
+| key            | value    | type   |
+| -------------- | -------- | ------ |
+| animal-picture | cat1.jpg | file   |
+| pictureId      | cat2.jpg | string |
+
+- **Result:**
+
+  ```js
+  {
+    message: `picture updated successfully`;
+  }
+  ```
+
+> [Back to index routes](#index)
+
+---
+
+### Update Principal picture
+
+Updates the principal picture of the animal
+
+> To use this route, you must register and then login. Once logged in, in Postman you need to put in the header section as key **Cookie** and value **Token receive in postman** [for more info about cookies here](https://learning.postman.com/docs/sending-requests/cookies/) where **token** is the code that you are going to receive as response once you are logged in.
+
+- **URL**
+
+  /api/animals/update-isPrincipal/:animalId
+
+- **Method:**
+
+  `patch`
+
+- **URL Params**
+
+`animalId: string`
+
+**Required:**
+
+`animalId`, `pictureId`
+
+- **Body**
+
+```js
+{
+    "pictureId": "6172db4b6840eeb401673096",
+    "isPrincipal": true
+}
+```
+
+- **Result:**
+
+  ```js
+  {
+    message: `picture, with the id: '61751428e9e34386a8e8cf02' updated successfully`;
+  }
+  ```
+
+> [Back to index routes](#index)
+
+---
+
+## Errors convention
+
+### Validation errors:
+
+start with the letter `VE`, followed by the number error, each number is an different error, detailed as follows:
+
+- **VE001:** The length of the `id` is not equal to 20 characters.
+- **VE002:** Bad entry `Id`, the `id `send in the form is different than the `id` that is set as parameter.
+- **VE003:** The password supplied by the user is not the same than the one that is stored in the server.
+- **VE004:** The` email` and `repeat email` field do not match.
+- **VE005** Cannot update email, the user supply an email that is already stored in the database.
+- **VE006** Cannot register new user, the user supply an email that is already stored in the database.
+- **VE007** cannot delete animal because the `id` supplied do not match with the animal or do not exist .
+- **VE008** cannot delete animal because the with the id supplied do not have registered animals.
+- **VE009** cannot delete animal because the with the id supplied because do not belong to the user with the id supplied
+- **VE010** cannot delete animal because the with the id supplied do not have registered animals.
+
+### Not found errors:
+
+- **NF001** The user Id supplied doe'nt exist
+- **NF002** The animal Id supplied doe'nt exist, in user's collection
+
+> [Back to index routes](#index)
+
+---

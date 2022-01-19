@@ -1,10 +1,11 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const hashCreator = require("../utils/hash");
-const databaseAccess = require("../data-access/user-register");
+const databaseAccess = require("../data-access/users");
 
 const loginController = {
   addUserLogin: async (req, res) => {
@@ -41,18 +42,17 @@ const loginController = {
         userEmail: userRegistered[0].email,
       };
       const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-
-      res.status(200).json({
-        message: `Welcome '${user.userName}'`,
-        user: {
-          userId: userRegistered[0].id,
-          userName: userRegistered[0].name,
-          userEmail: userRegistered[0].email,
-          token: accessToken,
-        },
-      });
+      // send cookie
+      return res
+        .cookie("access_token", accessToken, {
+          httpOnly: true,
+          sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+          secure: process.env.NODE_ENV === "production",
+        })
+        .status(200)
+        .json({ message: "welcome", user });
     } catch (error) {
-      res.status(401).json({ message: error.message, stack: error.stack });
+      res.status(401).json({ message: error.message });
     }
   },
 };

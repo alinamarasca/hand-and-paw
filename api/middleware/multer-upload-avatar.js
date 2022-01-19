@@ -4,7 +4,7 @@ const path = require("path");
 
 const storageImage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./client/public/avatar-uploads/");
+    cb(null, "./client/assets/images/avatar-uploads/");
   },
   filename: (req, file, cb) => {
     // eslint-disable-next-line prefer-template
@@ -27,7 +27,7 @@ const imageFilter = (req, file, callback) => {
 const upload = multer({
   storage: storageImage,
   limits: {
-    fileSize: 1024 * 1024,
+    fileSize: 9097520,
   },
   fileFilter: imageFilter,
 });
